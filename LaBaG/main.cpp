@@ -64,7 +64,7 @@ public:
 
         int FScores[3] = { 20000, 10000, 2500 };
         P_Map["F"] = P("F", FScores, 3);
-    }
+    }//
 
     bool GameRunning() {
         return played < times;
