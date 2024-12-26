@@ -1,5 +1,4 @@
-#ifndef LABAG_H
-#define LABAG_H
+#pragma once
 
 #include "P.h"
 #include <map>
@@ -20,12 +19,10 @@ public:
 
     LaBaG();
 
-    bool GameRunning();
+    bool GameRunning() const;
     vector<int> acc_rate();
     void random();
     void get_score(P p, int typ);
     void calculate_score();
     void result();
 };
-
-#endif // LABAG_H

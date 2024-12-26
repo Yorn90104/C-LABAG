@@ -8,8 +8,9 @@ int main() {
     LaBaG Game;
     while (Game.GameRunning()) {
         cout << "請按下 ENTER" << endl;
-        string s;
-        getline(cin, s);
+        string s = "";
+        //cin >> s; //<-- 一定要輸入字串 不能直接按ENTER
+        getline(cin, s); // 讀取一行 偵測到換行符號結束讀取
         if (s.compare("") == 0) {
             Game.random();
             Game.calculate_score();

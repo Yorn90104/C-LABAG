@@ -31,7 +31,7 @@ LaBaG::LaBaG() : times(30), played(0), score(0), margin_score(0) {
 }
 
 // 遊戲是否運行
-bool LaBaG::GameRunning() {
+bool LaBaG::GameRunning() const {
     return played < times;
 }
 
@@ -50,9 +50,15 @@ vector<int> LaBaG::acc_rate() {
 void LaBaG::random() {
     int rand_nums[3] = { rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1 };
     vector<int> rate_range = acc_rate();
+    cout << "機率區間：";
+    for (int r : rate_range) {
+        cout << r << " ";
+    }
+    cout << endl;
+
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 6; j++) {
-            if (rand_nums[i] < rate_range[j]) {
+            if (rand_nums[i] <= rate_range[j]) {
                 Ps[i] = P_Map[sequence[j]];
                 break;
             }

@@ -1,5 +1,4 @@
-#ifndef P_H
-#define P_H
+#pragma once
 
 #include <string>
 using namespace std;
@@ -17,4 +16,3 @@ public:
     bool operator!=(const P& other) const;
 };
 
-#endif // P_H
