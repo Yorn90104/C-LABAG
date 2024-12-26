@@ -35,6 +35,13 @@ bool LaBaG::GameRunning() const {
     return played < times;
 }
 
+//遊戲內部邏輯流程
+void LaBaG::GameLogic() {
+    random();
+    calculate_score();
+    result();
+}
+
 // 累積機率
 vector<int> LaBaG::acc_rate() {
     int acc = 0;

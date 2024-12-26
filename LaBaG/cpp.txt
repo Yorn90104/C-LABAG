@@ -1,5 +1,5 @@
 @.\LaBaG.cpp
-#include "LaBaG.h"
+﻿#include "LaBaG.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -32,8 +32,15 @@ LaBaG::LaBaG() : times(30), played(0), score(0), margin_score(0) {
 }
 
 // 遊戲是否運行
-bool LaBaG::GameRunning() {
+bool LaBaG::GameRunning() const {
     return played < times;
+}
+
+//遊戲內部邏輯流程
+void LaBaG::GameLogic() {
+    random();
+    calculate_score();
+    result();
 }
 
 // 累積機率
@@ -51,9 +58,15 @@ vector<int> LaBaG::acc_rate() {
 void LaBaG::random() {
     int rand_nums[3] = { rand() % 100 + 1, rand() % 100 + 1, rand() % 100 + 1 };
     vector<int> rate_range = acc_rate();
+    cout << "機率區間：";
+    for (int r : rate_range) {
+        cout << r << " ";
+    }
+    cout << endl;
+
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 6; j++) {
-            if (rand_nums[i] < rate_range[j]) {
+            if (rand_nums[i] <= rate_range[j]) {
                 Ps[i] = P_Map[sequence[j]];
                 break;
             }
@@ -106,8 +119,7 @@ void LaBaG::result() {
 
 
 @.\LaBaG.h
-#ifndef LABAG_H
-#define LABAG_H
+#pragma once
 
 #include "P.h"
 #include <map>
@@ -128,7 +140,9 @@ public:
 
     LaBaG();
 
-    bool GameRunning();
+    bool GameRunning() const;
+    void GameLogic();
+private:
     vector<int> acc_rate();
     void random();
     void get_score(P p, int typ);
@@ -136,35 +150,38 @@ public:
     void result();
 };
 
-#endif // LABAG_H
-
 
 @.\main.cpp
-#include "LaBaG.h"
+﻿#include "LaBaG.h"
 #include <iostream>
 #include <string>
+#include "raylib.h"
 using namespace std;
 
 int main() {
     srand(time(NULL));
     LaBaG Game;
-    while (Game.GameRunning()) {
-        cout << "請按下 ENTER" << endl;
-        string s;
-        getline(cin, s);
-        if (s.compare("") == 0) {
-            Game.random();
-            Game.calculate_score();
-            Game.result();
+    InitWindow(450, 800, "LaBaG");
+
+    while (!WindowShouldClose())
+    {
+        while (Game.GameRunning()) {
+            cout << "請按下 ENTER" << endl;
+            string s = "";
+            getline(cin, s); // 讀取一行 偵測到換行符號結束讀取
+            if (s.compare("") == 0) {
+                Game.GameLogic();
+            }
         }
+        /*cout << "\n遊戲結束！\n最終總分為：" << Game.score << endl;*/
     }
-    cout << "\n遊戲結束！\n最終總分為：" << Game.score << endl;
+    CloseWindow();
     return 0;
 }
 
 
 @.\P.cpp
-#include "P.h"
+﻿#include "P.h"
 
 // 預設構造函數
 P::P() : code(""), Rate(0) {
@@ -191,8 +208,7 @@ bool P::operator!=(const P& other) const {
 
 
 @.\P.h
-#ifndef P_H
-#define P_H
+#pragma once
 
 #include <string>
 using namespace std;
@@ -210,6 +226,5 @@ public:
     bool operator!=(const P& other) const;
 };
 
-#endif // P_H
 
 

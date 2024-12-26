@@ -27,10 +27,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="P.h">
-      <Filter>標頭檔</Filter>
+      <Filter>來源檔案</Filter>
     </ClInclude>
     <ClInclude Include="LaBaG.h">
-      <Filter>標頭檔</Filter>
+      <Filter>來源檔案</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

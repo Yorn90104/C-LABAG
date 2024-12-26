@@ -20,6 +20,8 @@ public:
     LaBaG();
 
     bool GameRunning() const;
+    void GameLogic();
+private:
     vector<int> acc_rate();
     void random();
     void get_score(P p, int typ);
