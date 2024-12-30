@@ -6,25 +6,61 @@
 #include <string>
 using namespace std;
 
-class LaBaG {
+class LaBaG 
+{
 public:
-    int times;
-    int played;
     int score;
-    int margin_score;
-
-    map<string, P> P_Map;
-    string sequence[6];
-    P Ps[3];
-
+    
     LaBaG();
 
     bool GameRunning() const;
     void GameLogic();
-private:
+
+private: 
+    int times;
+    int played;
+    int margin_score;
+   
+    map<string, int> score_time_map;
+    int score_time;
+
+    map<string, P> P_Map;
+    string sequence[6]; 
+    P Ps[3];
+    
+    void Reset();
+    string NowMod();
     vector<int> acc_rate();
-    void random();
-    void get_score(P p, int typ);
-    void calculate_score();
-    void result();
+    void Random();
+    void GetScore(P p, int typ);
+    void CalculateScore();
+    void Result();
+
+    
+    bool SuperHHH;
+    int SuperRate;
+    int SuperTimes;
+    int SuperNum;
+
+    void SuperFalse();
+    void SuperRandom();
+    void JudgeSuper();
+
+ 
+    bool GreenWei;
+    int GreenRate;
+    int GreenTimes;
+    int GreenNum;
+    int gss_times;
+
+    void GreenFalse();
+    void GreenRandom();
+    void JudgeGreen();
+
+   
+    bool PiKaChu;
+    int kachu_times;
+
+    void KachuFalse();
+    void JudgeKaChu();
 };

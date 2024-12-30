@@ -1,4 +1,5 @@
 import os
+import chardet
 
 #獲取當前資料夾的東西
 dir_file_dict = dict()
@@ -25,18 +26,30 @@ def extract_py_to_dict(dir_path:str):
                     continue
 
                 
-                    
-
-
 def py_dict_to_txt(files_dict: dict[str, list[str]]):
     with open("cpp.txt", 'w', encoding='utf-8') as txt:
         for dir_path in files_dict:
             for f in files_dict[dir_path]:
                 txt.write(f"@{dir_path}\\{f}\n")
                 file_path = os.path.join(dir_path, f)
-                with open(file_path, "r", encoding='utf-8') as file:
-                    txt.write(file.read())
-                txt.write("\n\n")
+                try:
+                    with open(file_path, "r", encoding='utf-8') as file:
+                        txt.write(file.read())
+                    txt.write("\n\n")
+                except Exception as e:
+                    print(f"無法解碼該檔案 {file_path}: {e}")
+                    with open(file_path, 'rb') as file:
+                        raw_data = file.read()
+                        result = chardet.detect(raw_data)
+                        encoding = result['encoding']
+                        print(f"此編碼為{encoding}")
+                        try:
+                            with open(file_path, 'r', encoding=encoding, errors='ignore') as file:
+                                txt.write(file.read())
+                            txt.write("\n\n")
+                            print(f"該檔案 {file_path} 已忽略無法解碼的字元")
+                        except Exception as e:
+                            print(f"即使使用檢測編碼也無法解碼該檔案 {file_path}: {e}")
 
 
 extract_py_to_dict(".")

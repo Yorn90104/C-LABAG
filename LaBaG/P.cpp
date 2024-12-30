@@ -1,14 +1,14 @@
 ﻿#include "P.h"
 
 // 預設構造函數
-P::P() : code(""), Rate(0) {
+P::P() : code(""), Rate({ {"Normal", 1} }) {
     for (int i = 0; i < 3; i++) {
         Score[i] = 0;
     }
 }
 
 // 帶參數的構造函數
-P::P(string c, int s[3], int r) : code(c), Rate(r) {
+P::P(string c, int s[3], map<string, int> r) : code(c), Rate(r) {
     for (int i = 0; i < 3; i++) {
         Score[i] = s[i];
     }
